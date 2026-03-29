@@ -2,6 +2,7 @@
 
 import { Clock, FileText, MessageSquare } from 'lucide-react';
 
+/** Развёрнутая правая панель */
 export function ProjectRightPanel({ projectId }: { projectId: string }) {
   return (
     <div className="p-4 space-y-6">
@@ -34,6 +35,29 @@ export function ProjectRightPanel({ projectId }: { projectId: string }) {
           <span>Нет комментариев</span>
         </div>
       </div>
+    </div>
+  );
+}
+
+/** Свёрнутая правая панель (только иконки) */
+export function ProjectRightPanelIcons() {
+  const items = [
+    { icon: Clock, title: 'Активность' },
+    { icon: FileText, title: 'Заметки' },
+    { icon: MessageSquare, title: 'Комментарии' },
+  ];
+
+  return (
+    <div className="py-3 px-1.5 space-y-1">
+      {items.map((item) => (
+        <button
+          key={item.title}
+          title={item.title}
+          className="flex items-center justify-center rounded-lg p-2 text-blue-500 hover:bg-di-surface-high transition-colors w-full"
+        >
+          <item.icon className="h-4 w-4" />
+        </button>
+      ))}
     </div>
   );
 }

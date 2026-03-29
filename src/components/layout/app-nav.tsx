@@ -15,8 +15,20 @@ import {
   Bell,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import type { LucideIcon } from 'lucide-react';
 
-const sections = [
+interface NavItem {
+  href: string;
+  icon: LucideIcon;
+  label: string;
+}
+
+interface NavSection {
+  title?: string;
+  items: NavItem[];
+}
+
+const sections: NavSection[] = [
   {
     items: [
       { href: '/', icon: LayoutDashboard, label: 'Обзор' },
@@ -48,8 +60,14 @@ const sections = [
   },
 ];
 
-export function AppNav() {
+function useActiveCheck() {
   const pathname = usePathname();
+  return (href: string) => href === '/' ? pathname === '/' : pathname.startsWith(href);
+}
+
+/** Полная навигация (развёрнутая) */
+export function AppNav() {
+  const isActive = useActiveCheck();
 
   return (
     <nav className="py-2 px-2 space-y-4">
@@ -61,27 +79,49 @@ export function AppNav() {
             </p>
           )}
           <div className="space-y-0.5">
-            {section.items.map((item) => {
-              const isActive =
-                item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    'flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors',
-                    isActive
-                      ? 'bg-blue-600 text-white'
-                      : 'text-di-on-surface-variant hover:bg-di-surface-high',
-                  )}
-                >
-                  <item.icon className="h-4 w-4 flex-shrink-0" />
-                  <span className="truncate">{item.label}</span>
-                </Link>
-              );
-            })}
+            {section.items.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  'flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors',
+                  isActive(item.href)
+                    ? 'bg-blue-600 text-white'
+                    : 'text-di-on-surface-variant hover:bg-di-surface-high',
+                )}
+              >
+                <item.icon className="h-4 w-4 flex-shrink-0" />
+                <span className="truncate">{item.label}</span>
+              </Link>
+            ))}
           </div>
         </div>
+      ))}
+    </nav>
+  );
+}
+
+/** Свёрнутая навигация (только иконки) */
+export function AppNavCollapsed() {
+  const isActive = useActiveCheck();
+  const allItems = sections.flatMap((s) => s.items);
+
+  return (
+    <nav className="py-2 px-1.5 space-y-1">
+      {allItems.map((item) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          title={item.label}
+          className={cn(
+            'flex items-center justify-center rounded-lg p-2 transition-colors',
+            isActive(item.href)
+              ? 'bg-blue-600 text-white'
+              : 'text-di-on-surface-variant hover:bg-di-surface-high',
+          )}
+        >
+          <item.icon className="h-4 w-4" />
+        </Link>
       ))}
     </nav>
   );
