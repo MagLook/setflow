@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, type ReactNode } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface AppShellProps {
@@ -26,9 +26,9 @@ export function AppShell({
   const [rightCollapsed, setRightCollapsed] = useState(false);
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex flex-col h-screen overflow-hidden bg-di-bg">
       {/* Top bar */}
-      <header className="h-12 flex-shrink-0 bg-topbar text-topbar-foreground border-b flex items-center px-4">
+      <header className="h-12 flex-shrink-0 bg-di-surface-lowest border-b border-di-outline-variant/20 flex items-center px-4">
         {topBar}
       </header>
 
@@ -37,46 +37,27 @@ export function AppShell({
         {/* Zone 1: Nav sidebar */}
         <aside
           className={cn(
-            'flex-shrink-0 bg-sidebar text-sidebar-foreground border-r transition-all duration-200 overflow-y-auto relative',
+            'flex-shrink-0 bg-di-surface-lowest transition-all duration-200 overflow-y-auto overflow-x-hidden',
             navCollapsed ? 'w-12' : 'w-56',
           )}
         >
-          <div className={cn('h-full', navCollapsed && 'overflow-hidden')}>
-            {nav}
-          </div>
+          {!navCollapsed && <div className="h-full">{nav}</div>}
           <button
             onClick={() => setNavCollapsed(!navCollapsed)}
-            className="absolute top-2 -right-3 z-10 h-6 w-6 rounded-full bg-border flex items-center justify-center hover:bg-accent transition-colors"
+            className="absolute bottom-3 left-2 z-10 p-1 rounded-md text-muted-foreground hover:bg-di-surface-high transition-colors"
           >
             {navCollapsed ? (
-              <ChevronRight className="h-3 w-3" />
+              <ChevronsRight className="h-4 w-4" />
             ) : (
-              <ChevronLeft className="h-3 w-3" />
+              <ChevronsLeft className="h-4 w-4" />
             )}
           </button>
         </aside>
 
         {/* Zone 2: Left panel */}
-        {leftPanel && (
-          <aside
-            className={cn(
-              'flex-shrink-0 bg-panel text-panel-foreground border-r transition-all duration-200 overflow-y-auto relative',
-              leftCollapsed ? 'w-0' : 'w-64',
-            )}
-          >
-            <div className={cn('h-full min-w-64', leftCollapsed && 'hidden')}>
-              {leftPanel}
-            </div>
-            <button
-              onClick={() => setLeftCollapsed(!leftCollapsed)}
-              className="absolute top-2 -right-3 z-10 h-6 w-6 rounded-full bg-border flex items-center justify-center hover:bg-accent transition-colors"
-            >
-              {leftCollapsed ? (
-                <ChevronRight className="h-3 w-3" />
-              ) : (
-                <ChevronLeft className="h-3 w-3" />
-              )}
-            </button>
+        {leftPanel && !leftCollapsed && (
+          <aside className="w-64 flex-shrink-0 bg-di-panel border-r border-di-outline-variant/15 overflow-y-auto">
+            {leftPanel}
           </aside>
         )}
 
@@ -84,36 +65,19 @@ export function AppShell({
         <div className="flex-1 flex flex-col overflow-hidden min-w-0">
           {/* Center tabs/toolbar */}
           {centerTabs && (
-            <div className="h-10 flex-shrink-0 bg-panel border-b flex items-center px-4 gap-1 overflow-x-auto">
+            <div className="h-10 flex-shrink-0 bg-di-surface border-b border-di-outline-variant/15 flex items-center px-4 gap-1 overflow-x-auto">
               {centerTabs}
             </div>
           )}
 
           {/* Center content */}
-          <div className="flex-1 overflow-auto">{center}</div>
+          <div className="flex-1 overflow-auto bg-di-bg">{center}</div>
         </div>
 
         {/* Zone 4: Right panel */}
-        {rightPanel && (
-          <aside
-            className={cn(
-              'flex-shrink-0 bg-panel text-panel-foreground border-l transition-all duration-200 overflow-y-auto relative',
-              rightCollapsed ? 'w-0' : 'w-80',
-            )}
-          >
-            <button
-              onClick={() => setRightCollapsed(!rightCollapsed)}
-              className="absolute top-2 -left-3 z-10 h-6 w-6 rounded-full bg-border flex items-center justify-center hover:bg-accent transition-colors"
-            >
-              {rightCollapsed ? (
-                <ChevronLeft className="h-3 w-3" />
-              ) : (
-                <ChevronRight className="h-3 w-3" />
-              )}
-            </button>
-            <div className={cn('h-full min-w-80', rightCollapsed && 'hidden')}>
-              {rightPanel}
-            </div>
+        {rightPanel && !rightCollapsed && (
+          <aside className="w-80 flex-shrink-0 bg-di-panel border-l border-di-outline-variant/15 overflow-y-auto">
+            {rightPanel}
           </aside>
         )}
       </div>

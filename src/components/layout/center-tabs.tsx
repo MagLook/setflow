@@ -31,8 +31,8 @@ export function CenterTabs({ tabs, rightSlot }: CenterTabsProps) {
               className={cn(
                 'flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors whitespace-nowrap',
                 isActive
-                  ? 'bg-primary/15 text-primary'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-accent',
+                  ? 'bg-blue-600/15 text-blue-500'
+                  : 'text-di-on-surface-variant hover:text-di-on-surface hover:bg-di-surface-high',
               )}
             >
               {tab.icon && <tab.icon className="h-3.5 w-3.5" />}

@@ -56,7 +56,7 @@ export function AppNav() {
       {sections.map((section, sIdx) => (
         <div key={sIdx}>
           {section.title && (
-            <p className="px-3 py-1 text-[10px] font-semibold text-muted-foreground tracking-wider uppercase">
+            <p className="px-3 py-1 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
               {section.title}
             </p>
           )}
@@ -71,8 +71,8 @@ export function AppNav() {
                   className={cn(
                     'flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors',
                     isActive
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
+                      ? 'bg-blue-600 text-white'
+                      : 'text-di-on-surface-variant hover:bg-di-surface-high',
                   )}
                 >
                   <item.icon className="h-4 w-4 flex-shrink-0" />
