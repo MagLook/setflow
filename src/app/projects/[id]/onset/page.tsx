@@ -1,4 +1,4 @@
-export default function OnSetPage() {
+export default function ProjectOnSetPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">

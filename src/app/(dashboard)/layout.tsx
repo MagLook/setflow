@@ -1,23 +1,13 @@
 import Link from 'next/link';
-import {
-  LayoutDashboard,
-  Users,
-  Calendar,
-  Package,
-  Map,
-  Radio,
-  UserCircle,
-  Settings,
-} from 'lucide-react';
+import { LayoutDashboard, FolderOpen, Users, Package, UserCircle, BookUser, Settings } from 'lucide-react';
 
 const navItems = [
   { href: '/', icon: LayoutDashboard, label: 'Обзор' },
+  { href: '/projects', icon: FolderOpen, label: 'Проекты' },
   { href: '/crew', icon: Users, label: 'Команда' },
-  { href: '/schedule', icon: Calendar, label: 'Расписание' },
   { href: '/equipment', icon: Package, label: 'Оборудование' },
-  { href: '/setplan', icon: Map, label: 'План площадки' },
-  { href: '/onset', icon: Radio, label: 'На площадке' },
   { href: '/clients', icon: UserCircle, label: 'Клиенты' },
+  { href: '/contacts', icon: BookUser, label: 'Контакты' },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {

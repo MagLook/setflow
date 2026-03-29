@@ -91,6 +91,43 @@ export const equipmentStatusEnum = pgEnum('equipment_status', [
 
 export const equipmentOwnershipEnum = pgEnum('equipment_ownership', ['owned', 'rented']);
 
+export const contactTypeEnum = pgEnum('contact_type', [
+  'rental_house',
+  'venue',
+  'contractor',
+  'freelancer',
+  'agency',
+  'other',
+]);
+
+export const externalResourceTypeEnum = pgEnum('external_resource_type', [
+  'freelancer',
+  'rental',
+  'contractor',
+  'ai_tool',
+  'service',
+]);
+
+export const noteTypeEnum = pgEnum('note_type', [
+  'note',
+  'reference',
+  'script',
+  'storyboard',
+  'moodboard',
+  'other',
+]);
+
+export const budgetCategoryEnum = pgEnum('budget_category', [
+  'crew',
+  'equipment',
+  'rental',
+  'transport',
+  'location',
+  'catering',
+  'post_production',
+  'other',
+]);
+
 // ============================================================
 // Tables
 // ============================================================
@@ -154,6 +191,8 @@ export const projects = pgTable('projects', {
   clientName: varchar('client_name', { length: 255 }),
   budget: decimal('budget', { precision: 12, scale: 2 }),
   status: projectStatusEnum('status').notNull().default('planning'),
+  slug: varchar('slug', { length: 128 }).unique(),
+  coverImageUrl: text('cover_image_url'),
   startDate: date('start_date'),
   endDate: date('end_date'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
@@ -312,6 +351,111 @@ export const setPlans = pgTable('set_plans', {
 });
 
 // ============================================================
+// Project-level tables (рабочее пространство проекта)
+// ============================================================
+
+export const projectCrew = pgTable('project_crew', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  projectId: uuid('project_id')
+    .references(() => projects.id, { onDelete: 'cascade' })
+    .notNull(),
+  crewMemberId: uuid('crew_member_id')
+    .references(() => crewMembers.id, { onDelete: 'cascade' })
+    .notNull(),
+  projectRole: crewRoleEnum('project_role').notNull(),
+  customRate: decimal('custom_rate', { precision: 10, scale: 2 }),
+  notes: text('notes'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const projectEquipment = pgTable('project_equipment', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  projectId: uuid('project_id')
+    .references(() => projects.id, { onDelete: 'cascade' })
+    .notNull(),
+  equipmentId: uuid('equipment_id')
+    .references(() => equipment.id, { onDelete: 'cascade' })
+    .notNull(),
+  assignedFrom: date('assigned_from'),
+  assignedUntil: date('assigned_until'),
+  responsibleCrewId: uuid('responsible_crew_id').references(() => crewMembers.id),
+  notes: text('notes'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const externalResources = pgTable('external_resources', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  projectId: uuid('project_id')
+    .references(() => projects.id, { onDelete: 'cascade' })
+    .notNull(),
+  type: externalResourceTypeEnum('type').notNull(),
+  name: varchar('name', { length: 255 }).notNull(),
+  contactInfo: text('contact_info'),
+  cost: decimal('cost', { precision: 12, scale: 2 }),
+  notes: text('notes'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const projectNotes = pgTable('project_notes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  projectId: uuid('project_id')
+    .references(() => projects.id, { onDelete: 'cascade' })
+    .notNull(),
+  title: varchar('title', { length: 255 }).notNull(),
+  content: text('content'),
+  type: noteTypeEnum('type').notNull().default('note'),
+  tags: jsonb('tags').default([]),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export const projectFiles = pgTable('project_files', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  projectId: uuid('project_id')
+    .references(() => projects.id, { onDelete: 'cascade' })
+    .notNull(),
+  noteId: uuid('note_id').references(() => projectNotes.id, { onDelete: 'set null' }),
+  fileName: varchar('file_name', { length: 255 }).notNull(),
+  fileUrl: text('file_url').notNull(),
+  mimeType: varchar('mime_type', { length: 128 }),
+  sizeBytes: integer('size_bytes'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const budgetItems = pgTable('budget_items', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  projectId: uuid('project_id')
+    .references(() => projects.id, { onDelete: 'cascade' })
+    .notNull(),
+  category: budgetCategoryEnum('category').notNull(),
+  description: varchar('description', { length: 255 }).notNull(),
+  plannedAmount: decimal('planned_amount', { precision: 12, scale: 2 }),
+  actualAmount: decimal('actual_amount', { precision: 12, scale: 2 }),
+  notes: text('notes'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// ============================================================
+// Org-level: Контакты и подрядчики
+// ============================================================
+
+export const contacts = pgTable('contacts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id')
+    .references(() => organizations.id)
+    .notNull(),
+  type: contactTypeEnum('type').notNull(),
+  name: varchar('name', { length: 255 }).notNull(),
+  company: varchar('company', { length: 255 }),
+  phone: varchar('phone', { length: 32 }),
+  email: varchar('email', { length: 255 }),
+  address: text('address'),
+  notes: text('notes'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// ============================================================
 // Relations
 // ============================================================
 
@@ -321,6 +465,7 @@ export const organizationsRelations = relations(organizations, ({ many }) => ({
   projects: many(projects),
   equipment: many(equipment),
   locations: many(locations),
+  contacts: many(contacts),
 }));
 
 export const projectsRelations = relations(projects, ({ one, many }) => ({
@@ -330,6 +475,12 @@ export const projectsRelations = relations(projects, ({ one, many }) => ({
   }),
   shootDays: many(shootDays),
   setPlans: many(setPlans),
+  projectCrew: many(projectCrew),
+  projectEquipment: many(projectEquipment),
+  externalResources: many(externalResources),
+  notes: many(projectNotes),
+  files: many(projectFiles),
+  budgetItems: many(budgetItems),
 }));
 
 export const shootDaysRelations = relations(shootDays, ({ one, many }) => ({
