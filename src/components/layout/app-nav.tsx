@@ -5,6 +5,8 @@ import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
   FolderOpen,
+  FolderPlus,
+  Archive,
   Users,
   Package,
   UserCircle,
@@ -32,7 +34,14 @@ const sections: NavSection[] = [
   {
     items: [
       { href: '/', icon: LayoutDashboard, label: 'Обзор' },
-      { href: '/projects', icon: FolderOpen, label: 'Проекты' },
+    ],
+  },
+  {
+    title: 'ПРОЕКТЫ',
+    items: [
+      { href: '/projects', icon: FolderOpen, label: 'Все проекты' },
+      { href: '/projects/new', icon: FolderPlus, label: 'Новый проект' },
+      { href: '/projects/archive', icon: Archive, label: 'Архив' },
     ],
   },
   {

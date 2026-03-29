@@ -32,7 +32,11 @@ interface NavSection {
 
 const sections: NavSection[] = [
   {
-    items: [{ path: '', icon: LayoutDashboard, label: 'Обзор' }],
+    title: 'ПРОЕКТ',
+    items: [
+      { path: '', icon: LayoutDashboard, label: 'Обзор' },
+      { path: '/settings', icon: Settings, label: 'Свойства' },
+    ],
   },
   {
     title: 'ПОДГОТОВКА',
@@ -59,7 +63,6 @@ const sections: NavSection[] = [
     items: [
       { path: '/budget', icon: DollarSign, label: 'Бюджет' },
       { path: '/portal', icon: Globe, label: 'Портал' },
-      { path: '/settings', icon: Settings, label: 'Настройки' },
     ],
   },
 ];
