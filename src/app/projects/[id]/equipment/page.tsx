@@ -46,7 +46,8 @@ export default function ProjectEquipmentPage() {
             <h2 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-3">
               {category}
             </h2>
-            <table className="w-full border-separate border-spacing-y-1.5">
+            {/* Desktop table */}
+            <table className="hidden md:table w-full border-separate border-spacing-y-1.5">
               <thead>
                 <tr className="text-[10px] font-bold text-muted-foreground uppercase text-left">
                   <th className="px-4 py-2">Название</th>
@@ -75,6 +76,22 @@ export default function ProjectEquipmentPage() {
                 ))}
               </tbody>
             </table>
+            {/* Mobile cards */}
+            <div className="md:hidden space-y-2">
+              {items.map((item) => (
+                <div key={item.id} className="bg-di-surface-mid rounded-xl p-3 border-l-4 border-l-blue-500">
+                  <div className="font-semibold text-foreground text-sm">{item.name}</div>
+                  <div className="text-[10px] text-muted-foreground">{item.model} · {item.serial}</div>
+                  <div className="flex items-center justify-between mt-2 text-xs text-di-on-surface-variant">
+                    <span>{item.assignedTo}</span>
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-blue-500" />
+                      <span className="text-[10px] font-bold uppercase text-blue-600">{item.statusLabel}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>

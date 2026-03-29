@@ -110,7 +110,7 @@ export default function ProjectSetPlanPage() {
             </div>
 
             {/* Elements grid */}
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Cameras */}
               <SectionCard title="Камеры" icon={Camera} color="blue" items={plan.cameras.map((c) => ({
                 title: c.label,

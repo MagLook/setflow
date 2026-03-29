@@ -8,9 +8,9 @@ export default function ProjectChatPage() {
   const messages = DEMO_CHAT_MESSAGES.filter((m) => m.channel === activeChannel.id);
 
   return (
-    <div className="flex h-[calc(100vh-7.5rem)] -m-6">
-      {/* Каналы */}
-      <div className="w-56 flex-shrink-0 border-r border-di-outline-variant/15 bg-di-panel p-3">
+    <div className="flex h-[calc(100vh-7.5rem)] -mx-4 -my-4 md:-mx-6 md:-my-6">
+      {/* Каналы — скрыты на мобильных */}
+      <div className="hidden sm:block w-56 flex-shrink-0 border-r border-di-outline-variant/15 bg-di-panel p-3">
         <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-2 mb-2">
           Каналы
         </p>

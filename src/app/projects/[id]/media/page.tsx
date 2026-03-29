@@ -85,10 +85,10 @@ export default function ProjectMediaPage() {
           {DEMO_REVIEW_ROUNDS.map((round) => (
             <div
               key={round.id}
-              className="bg-di-surface-mid rounded-xl border border-transparent hover:border-di-primary/20 transition-all p-4 flex items-center gap-4"
+              className="bg-di-surface-mid rounded-xl border border-transparent hover:border-di-primary/20 transition-all p-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4"
             >
               {/* Превью */}
-              <div className="w-32 h-20 flex-shrink-0 rounded-lg bg-di-surface-lowest flex items-center justify-center">
+              <div className="w-full sm:w-32 h-20 flex-shrink-0 rounded-lg bg-di-surface-lowest flex items-center justify-center">
                 <Film className="h-6 w-6 text-blue-500" />
               </div>
 
@@ -132,7 +132,7 @@ export default function ProjectMediaPage() {
         <h2 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-3">
           Последние файлы
         </h2>
-        <table className="w-full border-separate border-spacing-y-1.5">
+        <table className="hidden md:table w-full border-separate border-spacing-y-1.5">
           <thead>
             <tr className="text-[10px] font-bold text-muted-foreground uppercase text-left">
               <th className="px-4 py-2">Файл</th>
@@ -173,6 +173,23 @@ export default function ProjectMediaPage() {
             ))}
           </tbody>
         </table>
+        {/* Mobile cards */}
+        <div className="md:hidden space-y-2">
+          {DEMO_MEDIA_FILES.map((file) => (
+            <div key={file.id} className="bg-di-surface-mid rounded-xl p-3 flex items-center gap-3">
+              {file.type === 'photo' ? (
+                <Image className="h-5 w-5 text-blue-500 flex-shrink-0" />
+              ) : (
+                <Film className="h-5 w-5 text-purple-500 flex-shrink-0" />
+              )}
+              <div className="flex-1 min-w-0">
+                <span className="text-sm text-foreground font-mono block truncate">{file.name}</span>
+                <span className="text-[10px] text-muted-foreground">{file.size} · {file.date.split(' ')[1]}</span>
+              </div>
+              {file.favorited && <Star className="h-4 w-4 text-amber-500 fill-amber-500 flex-shrink-0" />}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

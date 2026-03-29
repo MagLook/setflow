@@ -30,6 +30,7 @@ interface AppShellProps {
   topBar: ReactNode;
   nav: ReactNode;
   navCollapsedContent?: ReactNode;
+  mobileNav?: ReactNode;
   leftPanel?: ReactNode;
   leftPanelIcons?: ReactNode;
   leftPanelHeader?: ReactNode;
@@ -58,6 +59,7 @@ export function AppShell({
   topBar,
   nav,
   navCollapsedContent,
+  mobileNav,
   leftPanel,
   leftPanelIcons,
   leftPanelHeader,
@@ -81,11 +83,9 @@ export function AppShell({
   const handleNavResize = useCallback((delta: number) => {
     setNavWidth((w) => clamp(w + delta, NAV_MIN, NAV_MAX));
   }, []);
-
   const handleLeftResize = useCallback((delta: number) => {
     setLeftWidth((w) => clamp(w + delta, LEFT_MIN, LEFT_MAX));
   }, []);
-
   const handleRightResize = useCallback((delta: number) => {
     setRightWidth((w) => clamp(w + delta, RIGHT_MIN, RIGHT_MAX));
   }, []);
@@ -102,8 +102,8 @@ export function AppShell({
           {topBar}
         </header>
 
-        {/* ═══ Main body ═══ */}
-        <div className="flex flex-1 overflow-hidden">
+        {/* ═══ Desktop body (>=768px) ═══ */}
+        <div className="hidden md:flex flex-1 overflow-hidden">
 
           {/* Zone 1: Nav sidebar */}
           <div
@@ -122,17 +122,14 @@ export function AppShell({
             </button>
           </div>
 
-          {/* Resize: nav ↔ content */}
           <ResizeHandle side="left" onResize={handleNavResize} />
 
           {/* Zones 2+3+4 */}
           <div className="flex-1 flex flex-col overflow-hidden min-w-0">
 
-            {/* ═══ Toolbar row ═══ */}
+            {/* Toolbar row */}
             {hasToolbar && (
               <div className="h-10 flex-shrink-0 bg-di-surface border-b border-di-outline-variant/15 flex items-stretch">
-
-                {/* Left panel header */}
                 {hasLeft && (
                   <div
                     className="flex-shrink-0 flex items-center border-r border-di-outline-variant/15 transition-[width] duration-200 overflow-hidden"
@@ -142,10 +139,7 @@ export function AppShell({
                       {!leftCollapsed && leftPanelHeader}
                       <button
                         onClick={() => setLeftCollapsed(!leftCollapsed)}
-                        className={cn(
-                          'text-muted-foreground hover:text-foreground transition-colors flex-shrink-0',
-                          leftCollapsed ? '' : 'ml-auto',
-                        )}
+                        className={cn('text-muted-foreground hover:text-foreground transition-colors flex-shrink-0', leftCollapsed ? '' : 'ml-auto')}
                         title={leftCollapsed ? 'Развернуть панель' : 'Свернуть панель'}
                       >
                         {leftCollapsed ? <PanelLeftOpen className="h-3.5 w-3.5" /> : <PanelLeftClose className="h-3.5 w-3.5" />}
@@ -153,13 +147,9 @@ export function AppShell({
                     </div>
                   </div>
                 )}
-
-                {/* Center tabs */}
                 <div className="flex-1 flex items-center px-4 gap-1 overflow-x-auto min-w-0">
                   {centerTabs}
                 </div>
-
-                {/* Right panel header */}
                 {hasRight && (
                   <div
                     className="flex-shrink-0 flex items-center border-l border-di-outline-variant/15 transition-[width] duration-200 overflow-hidden"
@@ -168,10 +158,7 @@ export function AppShell({
                     <div className={cn('flex items-center w-full', rightCollapsed ? 'justify-center' : 'px-4')}>
                       <button
                         onClick={() => setRightCollapsed(!rightCollapsed)}
-                        className={cn(
-                          'text-muted-foreground hover:text-foreground transition-colors flex-shrink-0',
-                          rightCollapsed ? '' : 'mr-auto',
-                        )}
+                        className={cn('text-muted-foreground hover:text-foreground transition-colors flex-shrink-0', rightCollapsed ? '' : 'mr-auto')}
                         title={rightCollapsed ? 'Развернуть панель' : 'Свернуть панель'}
                       >
                         {rightCollapsed ? <PanelRightOpen className="h-3.5 w-3.5" /> : <PanelRightClose className="h-3.5 w-3.5" />}
@@ -183,10 +170,8 @@ export function AppShell({
               </div>
             )}
 
-            {/* ═══ Content row ═══ */}
+            {/* Content row */}
             <div className="flex flex-1 overflow-hidden">
-
-              {/* Zone 2: Left panel */}
               {hasLeft && (
                 <>
                   <aside
@@ -198,13 +183,7 @@ export function AppShell({
                   <ResizeHandle side="left" onResize={handleLeftResize} />
                 </>
               )}
-
-              {/* Zone 3: Center */}
-              <div className="flex-1 overflow-auto bg-di-bg min-w-0">
-                {center}
-              </div>
-
-              {/* Zone 4: Right panel */}
+              <div className="flex-1 overflow-auto bg-di-bg min-w-0">{center}</div>
               {hasRight && (
                 <>
                   <ResizeHandle side="right" onResize={handleRightResize} />
@@ -218,6 +197,24 @@ export function AppShell({
               )}
             </div>
           </div>
+        </div>
+
+        {/* ═══ Mobile body (<768px) ═══ */}
+        <div className="flex flex-col flex-1 overflow-hidden md:hidden">
+          {/* Mobile tabs */}
+          {centerTabs && (
+            <div className="h-10 flex-shrink-0 bg-di-surface border-b border-di-outline-variant/15 flex items-center px-3 gap-1 overflow-x-auto">
+              {centerTabs}
+            </div>
+          )}
+          {/* Mobile content */}
+          <div className="flex-1 overflow-auto bg-di-bg">{center}</div>
+          {/* Mobile bottom nav */}
+          {mobileNav && (
+            <nav className="flex-shrink-0 border-t border-di-outline-variant/15 bg-di-surface-lowest">
+              {mobileNav}
+            </nav>
+          )}
         </div>
       </div>
     </ShellContext.Provider>

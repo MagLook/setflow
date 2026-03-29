@@ -33,7 +33,7 @@ export default function TemplatesPage() {
               </div>
             </div>
             <p className="text-sm text-di-on-surface-variant mb-4">{tpl.description}</p>
-            <div className="grid grid-cols-5 gap-2">
+            <div className="grid grid-cols-3 md:grid-cols-5 gap-2">
               {[
                 { label: 'Команда', value: tpl.crew },
                 { label: 'Обор.', value: tpl.equipment },

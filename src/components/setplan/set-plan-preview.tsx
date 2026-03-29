@@ -43,7 +43,7 @@ export function SetPlanPreview({
 
   return (
     <div className="bg-di-surface-lowest rounded-xl border border-di-outline-variant/15 overflow-hidden">
-      <svg viewBox={`0 0 ${svgW} ${svgH}`} className="w-full" style={{ maxHeight: 420 }}>
+      <svg viewBox={`0 0 ${svgW} ${svgH}`} className="w-full max-h-64 sm:max-h-80 md:max-h-96 lg:max-h-[420px]">
         {/* Grid */}
         <defs>
           <pattern id="grid" width={SCALE} height={SCALE} patternUnits="userSpaceOnUse">

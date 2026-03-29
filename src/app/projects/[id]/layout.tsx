@@ -4,6 +4,7 @@ import { ProjectNav, ProjectNavCollapsed } from './project-nav';
 import { ProjectLeftPanel, ProjectLeftPanelIcons } from './project-left-panel';
 import { ProjectRightPanel, ProjectRightPanelIcons } from './project-right-panel';
 import { ProjectTabs } from './project-tabs';
+import { ProjectMobileNav } from './project-mobile-nav';
 
 function LeftHeader() {
   return (
@@ -15,7 +16,7 @@ function LeftHeader() {
 
 function RightHeader() {
   return (
-    <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest ml-2 flex items-center gap-1.5">
+    <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest ml-2">
       AI-ассистент
     </span>
   );
@@ -35,11 +36,12 @@ export default async function ProjectLayout({
       topBar={<TopBar />}
       nav={<ProjectNav projectId={id} />}
       navCollapsedContent={<ProjectNavCollapsed projectId={id} />}
+      mobileNav={<ProjectMobileNav projectId={id} />}
       leftPanel={<ProjectLeftPanel projectId={id} />}
       leftPanelIcons={<ProjectLeftPanelIcons />}
       leftPanelHeader={<LeftHeader />}
       centerTabs={<ProjectTabs projectId={id} />}
-      center={<div className="p-6">{children}</div>}
+      center={<div className="p-4 md:p-6">{children}</div>}
       rightPanel={<ProjectRightPanel projectId={id} />}
       rightPanelIcons={<ProjectRightPanelIcons />}
       rightPanelHeader={<RightHeader />}
