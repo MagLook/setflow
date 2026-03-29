@@ -654,3 +654,156 @@ export const DEMO_REVIEW_ROUNDS = [
     uploadedAt: null,
   },
 ];
+
+// ============================================================
+// Трекер задач
+// ============================================================
+
+export const DEMO_TASKS = [
+  { id: 't1', title: 'Зарядить 6 батарей Sony NP-FZ100', status: 'done' as const, priority: 'high' as const, assignee: 'Дмитрий Орлов', shootDay: 'Утро невесты', dueDate: '2026-04-14', tags: ['оборудование'] },
+  { id: 't2', title: 'Проверить разрешение на дрон (зона ЗАГСа)', status: 'done' as const, priority: 'high' as const, assignee: 'Анна Кузнецова', shootDay: null, dueDate: '2026-04-12', tags: ['документы'] },
+  { id: 't3', title: 'Забронировать Aputure 600d у «ПроСвет»', status: 'done' as const, priority: 'medium' as const, assignee: 'Елена Смирнова', shootDay: null, dueDate: '2026-04-10', tags: ['аренда'] },
+  { id: 't4', title: 'Подготовить список вопросов для тамады', status: 'in_progress' as const, priority: 'medium' as const, assignee: 'Сергей Волков', shootDay: 'Банкет', dueDate: '2026-04-14', tags: ['сценарий'] },
+  { id: 't5', title: 'Протестировать петличку DPA на помехи', status: 'in_progress' as const, priority: 'high' as const, assignee: 'Михаил Петров', shootDay: null, dueDate: '2026-04-13', tags: ['оборудование', 'звук'] },
+  { id: 't6', title: 'Скаут локации: ресторан «Олимп» (розетки, свет)', status: 'in_progress' as const, priority: 'medium' as const, assignee: 'Елена Смирнова', shootDay: 'Банкет', dueDate: '2026-04-13', tags: ['локация'] },
+  { id: 't7', title: 'Отформатировать карты CFexpress (x4)', status: 'todo' as const, priority: 'medium' as const, assignee: 'Дмитрий Орлов', shootDay: 'Утро невесты', dueDate: '2026-04-14', tags: ['оборудование'] },
+  { id: 't8', title: 'Привезти отражатель 5-в-1 и стойку', status: 'todo' as const, priority: 'low' as const, assignee: 'Дмитрий Орлов', shootDay: 'Церемония', dueDate: '2026-04-15', tags: ['оборудование'] },
+  { id: 't9', title: 'Напомнить молодожёнам про тайминг', status: 'todo' as const, priority: 'high' as const, assignee: 'Сергей Волков', shootDay: null, dueDate: '2026-04-14', tags: ['клиент'] },
+  { id: 't10', title: 'Загрузить LUT «Portra 400 warm» на обе камеры', status: 'todo' as const, priority: 'low' as const, assignee: 'Анна Кузнецова', shootDay: null, dueDate: '2026-04-14', tags: ['постпродакшн'] },
+  { id: 't11', title: 'Настроить Zoom F6: 4 канала, 32-bit float', status: 'todo' as const, priority: 'medium' as const, assignee: 'Михаил Петров', shootDay: 'Церемония', dueDate: '2026-04-15', tags: ['звук'] },
+  { id: 't12', title: 'Создать shared-папку для материалов', status: 'todo' as const, priority: 'low' as const, assignee: 'Сергей Волков', shootDay: null, dueDate: '2026-04-16', tags: ['постпродакшн'] },
+];
+
+export const TASK_STATUS_META: Record<string, { label: string; color: string }> = {
+  todo: { label: 'Новое', color: 'gray' },
+  in_progress: { label: 'В работе', color: 'blue' },
+  done: { label: 'Готово', color: 'green' },
+};
+
+export const TASK_PRIORITY_META: Record<string, { label: string; color: string }> = {
+  low: { label: 'Низкий', color: 'gray' },
+  medium: { label: 'Средний', color: 'amber' },
+  high: { label: 'Высокий', color: 'red' },
+};
+
+// ============================================================
+// Чат проекта
+// ============================================================
+
+export const DEMO_CHAT_CHANNELS = [
+  { id: 'ch-gen', name: 'Общий', type: 'general' as const, unread: 2 },
+  { id: 'ch-sd1', name: 'Утро невесты', type: 'shoot_day' as const, unread: 0 },
+  { id: 'ch-sd2', name: 'Церемония', type: 'shoot_day' as const, unread: 5 },
+  { id: 'ch-sd3', name: 'Банкет', type: 'shoot_day' as const, unread: 1 },
+];
+
+export const DEMO_CHAT_MESSAGES = [
+  { id: 'msg1', channel: 'ch-gen', author: 'Сергей Волков', avatar: 'СВ', time: '09:15', text: 'Доброе утро! Напоминаю: в среду финальный скаут ресторана. Кто может — подтвердите.' },
+  { id: 'msg2', channel: 'ch-gen', author: 'Елена Смирнова', avatar: 'ЕС', time: '09:22', text: 'Буду! Заодно проверю розетки и точки подвеса для света.' },
+  { id: 'msg3', channel: 'ch-gen', author: 'Михаил Петров', avatar: 'МП', time: '09:30', text: 'Не смогу в среду, но вопрос по звуку: есть ли линейный выход у ди-джея? Можете проверить?' },
+  { id: 'msg4', channel: 'ch-gen', author: 'Елена Смирнова', avatar: 'ЕС', time: '09:32', text: 'Да, спрошу менеджера. Записала.' },
+  { id: 'msg5', channel: 'ch-gen', author: 'SetFlow AI', avatar: 'AI', time: '09:35', text: '📋 Создала задачу: «Проверить линейный выход ди-джея» → Елена Смирнова, дедлайн: среда.', isAI: true },
+  { id: 'msg6', channel: 'ch-gen', author: 'Анна Кузнецова', avatar: 'АК', time: '10:01', text: 'Ребята, разрешение на дрон получено! Зона ЗАГСа — ограничение 50м, нам хватит.' },
+  { id: 'msg7', channel: 'ch-gen', author: 'SetFlow AI', avatar: 'AI', time: '10:02', text: '✅ Задача «Проверить разрешение на дрон» отмечена как выполненная.', isAI: true },
+  { id: 'msg8', channel: 'ch-gen', author: 'Дмитрий Орлов', avatar: 'ДО', time: '11:45', text: 'Все 6 батарей заряжены и проверены. Карты отформатирую завтра.' },
+  { id: 'msg9', channel: 'ch-gen', author: 'Сергей Волков', avatar: 'СВ', time: '12:10', text: '@setflow какая погода на 15 апреля?' },
+  { id: 'msg10', channel: 'ch-gen', author: 'SetFlow AI', avatar: 'AI', time: '12:10', text: '🌤 Прогноз на 15 апреля (Санкт-Петербург): +14°C, переменная облачность, без осадков. Ветер 3–5 м/с. Для дрона — условия подходящие.', isAI: true },
+];
+
+// ============================================================
+// Шаблоны съёмок
+// ============================================================
+
+export const DEMO_TEMPLATES = [
+  {
+    id: 'tpl1',
+    name: 'Интервью в помещении',
+    type: 'interview' as const,
+    description: '2-камерная схема, 3-точечный свет, boom + петличка. Для студии или офиса.',
+    crew: 3,
+    equipment: 8,
+    scenes: 4,
+    checklists: 3,
+    tasks: 6,
+    icon: '🎙️',
+    usageCount: 12,
+  },
+  {
+    id: 'tpl2',
+    name: 'Интервью на улице',
+    type: 'interview' as const,
+    description: '1 камера, отражатель, беспроводной звук. ND фильтры, ветрозащита обязательны.',
+    crew: 2,
+    equipment: 5,
+    scenes: 3,
+    checklists: 2,
+    tasks: 4,
+    icon: '🌳',
+    usageCount: 8,
+  },
+  {
+    id: 'tpl3',
+    name: 'Свадьба (полный день)',
+    type: 'event' as const,
+    description: '3 камеры, дрон, полный свет и звук. 3 блока: утро, церемония, банкет. 12+ сцен.',
+    crew: 5,
+    equipment: 15,
+    scenes: 12,
+    checklists: 5,
+    tasks: 15,
+    icon: '💒',
+    usageCount: 6,
+  },
+  {
+    id: 'tpl4',
+    name: 'Репортаж / событие',
+    type: 'reportage' as const,
+    description: '1 камера, накамерный свет, петличка. Максимальная мобильность и реакция.',
+    crew: 2,
+    equipment: 4,
+    scenes: 0,
+    checklists: 2,
+    tasks: 3,
+    icon: '📰',
+    usageCount: 15,
+  },
+  {
+    id: 'tpl5',
+    name: 'Корпоративный ролик',
+    type: 'corporate' as const,
+    description: '2 камеры, свет, звук, телепромтер. Сценарий, дубли, постановка.',
+    crew: 4,
+    equipment: 12,
+    scenes: 6,
+    checklists: 4,
+    tasks: 10,
+    icon: '🏢',
+    usageCount: 9,
+  },
+  {
+    id: 'tpl6',
+    name: 'Документалка (экспедиция)',
+    type: 'documentary' as const,
+    description: 'Автономная съёмка: защита оборудования, запас батарей, рации, GPS.',
+    crew: 4,
+    equipment: 18,
+    scenes: 8,
+    checklists: 6,
+    tasks: 12,
+    icon: '🏔️',
+    usageCount: 3,
+  },
+];
+
+// ============================================================
+// AI-ассистент (правая панель)
+// ============================================================
+
+export const DEMO_AI_INSIGHTS = [
+  { id: 'ins1', type: 'alert' as const, icon: '⚡', text: 'Дрон-оператор Кузнецова: разрешение получено, но батареи дрона последний раз использовались 3 недели назад. Рекомендую калибровку.', time: '2 мин назад' },
+  { id: 'ins2', type: 'suggestion' as const, icon: '💡', text: 'Для банкетного зала 120м² шаблон рекомендует 3 источника света. У вас назначено 2. Добавить Aputure Amaran 200d из инвентаря?', time: '15 мин назад', action: 'Добавить' },
+  { id: 'ins3', type: 'info' as const, icon: '📊', text: 'Прогресс подготовки: 3 из 12 задач выполнены (25%). 3 задачи в работе. До съёмки 16 дней.', time: '1 час назад' },
+  { id: 'ins4', type: 'suggestion' as const, icon: '💡', text: 'Звукорежиссёр Петров не сможет на скаут в среду. Вопрос по линейному выходу ди-джея делегирован Смирновой.', time: '3 часа назад' },
+  { id: 'ins5', type: 'auto' as const, icon: '🤖', text: 'Автоматически: сгенерирован черновой call sheet для «Утро невесты». Проверьте и утвердите.', time: '5 часов назад', action: 'Открыть' },
+  { id: 'ins6', type: 'info' as const, icon: '📊', text: 'Бюджет: запланировано 350 000 ₽, зафиксировано расходов на 127 000 ₽ (36%). В норме.', time: 'вчера' },
+];

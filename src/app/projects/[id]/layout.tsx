@@ -15,8 +15,8 @@ function LeftHeader() {
 
 function RightHeader() {
   return (
-    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-2">
-      Детали
+    <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest ml-2 flex items-center gap-1.5">
+      AI-ассистент
     </span>
   );
 }

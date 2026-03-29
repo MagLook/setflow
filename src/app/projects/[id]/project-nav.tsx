@@ -16,6 +16,8 @@ import {
   Settings,
   ArrowLeft,
   BrainCircuit,
+  ClipboardList,
+  MessageCircle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { LucideIcon } from 'lucide-react';
@@ -51,6 +53,13 @@ const sections: NavSection[] = [
   {
     title: 'СЪЁМКА',
     items: [{ path: '/onset', icon: Radio, label: 'На площадке' }],
+  },
+  {
+    title: 'КОММУНИКАЦИЯ',
+    items: [
+      { path: '/tasks', icon: ClipboardList, label: 'Задачи' },
+      { path: '/chat', icon: MessageCircle, label: 'Чат' },
+    ],
   },
   {
     title: 'МАТЕРИАЛЫ',

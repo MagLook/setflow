@@ -56,7 +56,7 @@ const sections: NavSection[] = [
   {
     title: 'ХРАНИЛИЩЕ',
     items: [
-      { href: '/templates', icon: FileText, label: 'Шаблоны' },
+      { href: '/templates', icon: FileText, label: 'Шаблоны съёмок' },
       { href: '/knowledge', icon: Database, label: 'База знаний' },
     ],
   },
