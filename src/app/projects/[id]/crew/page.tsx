@@ -1,4 +1,4 @@
-import { DEMO_CREW, AVAILABILITY_COLORS } from '@/shared/demo-data';
+import { DEMO_CREW, AVAILABILITY_COLORS, AVAILABILITY_LABELS } from '@/shared/demo-data';
 
 export default function ProjectCrewPage() {
   return (
@@ -56,7 +56,7 @@ export default function ProjectCrewPage() {
                     <div className="flex items-center gap-1.5">
                       <span className={`w-2 h-2 rounded-full bg-${color}-500`} />
                       <span className={`text-[10px] font-bold uppercase text-${color}-600`}>
-                        {member.availability === 'free' ? 'Свободен' : member.availability === 'busy' ? 'Занят' : 'Под вопросом'}
+                        {AVAILABILITY_LABELS[member.availability]}
                       </span>
                     </div>
                   </td>
@@ -81,7 +81,7 @@ export default function ProjectCrewPage() {
                 <div className="flex items-center gap-1.5">
                   <span className={`w-2 h-2 rounded-full bg-${color}-500`} />
                   <span className={`text-[10px] font-bold uppercase text-${color}-600`}>
-                    {member.availability === 'free' ? 'Свободен' : 'Под вопросом'}
+                    {AVAILABILITY_LABELS[member.availability]}
                   </span>
                 </div>
               </div>
