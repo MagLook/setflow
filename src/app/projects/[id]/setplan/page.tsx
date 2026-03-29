@@ -1,5 +1,67 @@
 import { DEMO_SET_ELEMENTS } from '@/shared/demo-production';
-import { Camera, Lightbulb, Mic, UserCircle, Map, ChevronRight } from 'lucide-react';
+import { Camera, Lightbulb, Mic, UserCircle, Map } from 'lucide-react';
+import { SetPlanPreview } from '@/components/setplan/set-plan-preview';
+
+// Координаты элементов на плане (в метрах от левого верхнего угла комнаты)
+const CEREMONY_POSITIONS = {
+  cameras: [
+    { id: 'cam-a', label: 'A', x: 9, y: 3.5, angle: 180, fov: 50 },
+    { id: 'cam-b', label: 'B', x: 6, y: 7, angle: -90, fov: 30 },
+  ],
+  lights: [
+    { id: 'light-1', x: 3, y: 3, angle: 30, spread: 80 },
+    { id: 'light-2', x: 9, y: 1.5, angle: 200, spread: 60 },
+  ],
+  sound: [
+    { id: 'snd-1', label: 'Петл.Ж', x: 5.5, y: 3.5 },
+    { id: 'snd-2', label: 'Петл.Н', x: 6.5, y: 3.5 },
+    { id: 'snd-3', label: 'Бум', x: 6, y: 2.5 },
+  ],
+  talent: [
+    { id: 'tal-1', label: 'Жених', x: 5.5, y: 3.5 },
+    { id: 'tal-2', label: 'Невеста', x: 6.5, y: 3.5 },
+    { id: 'tal-3', label: 'Ведущий', x: 6, y: 2 },
+    { id: 'tal-4', label: 'Свидетели', x: 4, y: 3.5 },
+  ],
+  furniture: [
+    { label: 'Стол ведущего', x: 5, y: 1, w: 2, h: 0.6 },
+    { label: 'Стулья гостей', x: 2, y: 5, w: 8, h: 2 },
+    { label: 'Вход', x: 0, y: 3, w: 0.3, h: 2 },
+  ],
+};
+
+const BANQUET_POSITIONS = {
+  cameras: [
+    { id: 'cam-a2', label: 'A', x: 7.5, y: 6, angle: -60, fov: 60 },
+    { id: 'cam-b2', label: 'B', x: 1, y: 2, angle: 30, fov: 25 },
+    { id: 'cam-c', label: 'D', x: 7.5, y: 3, angle: -90, fov: 90, color: 'rgba(6, 182, 212, 0.08)' },
+  ],
+  lights: [
+    { id: 'light-3', x: 10, y: 7, angle: 180, spread: 70 },
+    { id: 'light-4', x: 3, y: 1, angle: 90, spread: 80 },
+    { id: 'light-5', x: 7.5, y: 0.5, angle: 150, spread: 100, color: 'rgba(251, 146, 60, 0.06)' },
+  ],
+  sound: [
+    { id: 'snd-5', label: 'Пульт', x: 13, y: 1 },
+    { id: 'snd-6', label: 'Петл.', x: 4, y: 4.5 },
+    { id: 'snd-7', label: 'Бум', x: 5, y: 1.5 },
+    { id: 'snd-8', label: 'Ambient', x: 14, y: 9 },
+  ],
+  talent: [
+    { id: 'tal-5', label: 'Молодожёны', x: 7.5, y: 1 },
+    { id: 'tal-6', label: 'Тамада', x: 4.5, y: 4.5 },
+  ],
+  furniture: [
+    { label: 'Стол молодожёнов', x: 6, y: 0.3, w: 3, h: 1 },
+    { label: 'Танцпол', x: 5.5, y: 4, w: 4, h: 4, rx: 8 },
+    { label: 'Стол 1', x: 1, y: 4, w: 1.5, h: 1.5 },
+    { label: 'Стол 2', x: 1, y: 6.5, w: 1.5, h: 1.5 },
+    { label: 'Стол 3', x: 11, y: 4, w: 1.5, h: 1.5 },
+    { label: 'Стол 4', x: 11, y: 6.5, w: 1.5, h: 1.5 },
+    { label: 'DJ', x: 12.5, y: 0.3, w: 2, h: 1 },
+    { label: 'Сцена', x: 3, y: 0.3, w: 2.5, h: 1.2 },
+  ],
+};
 
 const ICON_MAP = { cameras: Camera, lights: Lightbulb, sound: Mic, talent: UserCircle };
 const SECTION_LABELS: Record<string, string> = { cameras: 'Камеры', lights: 'Свет', sound: 'Звук', talent: 'Позиции' };
@@ -33,17 +95,18 @@ export default function ProjectSetPlanPage() {
               </div>
             </div>
 
-            {/* Canvas placeholder */}
-            <div className="bg-di-surface-lowest rounded-xl border border-di-outline-variant/15 aspect-[16/7] mb-4 flex items-center justify-center relative overflow-hidden">
-              <div className="absolute inset-0 opacity-10" style={{
-                backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
-                backgroundSize: '40px 40px',
-              }} />
-              <div className="text-center z-10">
-                <Map className="h-10 w-10 text-blue-500 mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground">2D-редактор (react-konva)</p>
-                <p className="text-[10px] text-muted-foreground">{plan.room.width}×{plan.room.height}м · {plan.cameras.length} камер · {plan.lights.length} свет · {plan.sound.length} звук</p>
-              </div>
+            {/* 2D Plan SVG */}
+            <div className="mb-4">
+              <SetPlanPreview
+                width={plan.room.width}
+                height={plan.room.height}
+                roomLabel={plan.room.label}
+                cameras={pIdx === 0 ? CEREMONY_POSITIONS.cameras : BANQUET_POSITIONS.cameras}
+                lights={pIdx === 0 ? CEREMONY_POSITIONS.lights : BANQUET_POSITIONS.lights}
+                sound={pIdx === 0 ? CEREMONY_POSITIONS.sound : BANQUET_POSITIONS.sound}
+                talent={pIdx === 0 ? CEREMONY_POSITIONS.talent : BANQUET_POSITIONS.talent}
+                furniture={pIdx === 0 ? CEREMONY_POSITIONS.furniture : BANQUET_POSITIONS.furniture}
+              />
             </div>
 
             {/* Elements grid */}
