@@ -1,0 +1,90 @@
+{
+  "app": {
+    "name": "SetFlow",
+    "tagline": "Рабочий стол съёмочной группы"
+  },
+  "nav": {
+    "dashboard": "Обзор",
+    "crew": "Команда",
+    "schedule": "Расписание",
+    "equipment": "Оборудование",
+    "setplan": "План площадки",
+    "onset": "На площадке",
+    "clients": "Клиенты",
+    "settings": "Настройки"
+  },
+  "crew": {
+    "title": "Команда",
+    "addMember": "Добавить члена команды",
+    "roles": {
+      "operator": "Оператор",
+      "soundEngineer": "Звукорежиссёр",
+      "lightingTech": "Осветитель",
+      "makeupArtist": "Гримёр",
+      "assistant": "Ассистент",
+      "driver": "Водитель",
+      "producer": "Продюсер",
+      "director": "Режиссёр",
+      "editor": "Монтажёр"
+    },
+    "availability": {
+      "free": "Свободен",
+      "busy": "Занят",
+      "tentative": "Под вопросом"
+    }
+  },
+  "project": {
+    "title": "Проекты",
+    "create": "Новый проект",
+    "types": {
+      "documentary": "Документалка",
+      "interview": "Интервью",
+      "reportage": "Репортаж",
+      "corporate": "Корпоратив",
+      "event": "Мероприятие",
+      "shortFilm": "Короткий метр"
+    },
+    "status": {
+      "planning": "Планирование",
+      "shooting": "Съёмка",
+      "editing": "Монтаж",
+      "review": "Ревью",
+      "done": "Готово"
+    }
+  },
+  "equipment": {
+    "title": "Оборудование",
+    "addItem": "Добавить единицу",
+    "categories": {
+      "camera": "Камеры",
+      "lens": "Объективы",
+      "lighting": "Свет",
+      "audio": "Звук",
+      "grip": "Grip",
+      "power": "Питание",
+      "media": "Носители"
+    },
+    "status": {
+      "available": "Доступно",
+      "onShoot": "На съёмке",
+      "repair": "В ремонте",
+      "rented": "В аренде"
+    }
+  },
+  "shootDay": {
+    "title": "Съёмочный день",
+    "callTime": "Время сбора",
+    "wrapTime": "Время завершения"
+  },
+  "common": {
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "search": "Поиск",
+    "filter": "Фильтр",
+    "export": "Экспорт",
+    "loading": "Загрузка...",
+    "noData": "Нет данных"
+  }
+}

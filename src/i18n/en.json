@@ -1,0 +1,27 @@
+{
+  "app": {
+    "name": "SetFlow",
+    "tagline": "Film Crew Dashboard"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "crew": "Crew",
+    "schedule": "Schedule",
+    "equipment": "Equipment",
+    "setplan": "Set Plan",
+    "onset": "On Set",
+    "clients": "Clients",
+    "settings": "Settings"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "loading": "Loading...",
+    "noData": "No data"
+  }
+}

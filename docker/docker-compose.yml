@@ -1,0 +1,41 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: setflow-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: setflow
+      POSTGRES_PASSWORD: setflow
+      POSTGRES_DB: setflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: setflow-app
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://setflow:setflow@postgres:5432/setflow
+      AUTH_SECRET: ${AUTH_SECRET}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+
+  nginx:
+    image: nginx:alpine
+    container_name: setflow-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+
+volumes:
+  pgdata:
