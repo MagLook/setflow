@@ -15,6 +15,7 @@ import {
   Globe,
   Settings,
   ArrowLeft,
+  BrainCircuit,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { LucideIcon } from 'lucide-react';
@@ -63,6 +64,7 @@ const sections: NavSection[] = [
     items: [
       { path: '/budget', icon: DollarSign, label: 'Бюджет' },
       { path: '/portal', icon: Globe, label: 'Портал' },
+      { path: '/ai', icon: BrainCircuit, label: 'AI-подключения' },
     ],
   },
 ];
