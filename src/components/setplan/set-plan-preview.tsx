@@ -1,7 +1,7 @@
 'use client';
 
 interface CameraEl { id: string; label: string; x: number; y: number; angle: number; fov: number; color?: string }
-interface LightEl { id: string; label: string; x: number; y: number; angle: number; spread: number; color?: string }
+interface LightEl { id: string; label?: string; x: number; y: number; angle: number; spread: number; color?: string }
 interface SoundEl { id: string; label: string; x: number; y: number }
 interface TalentEl { id: string; label: string; x: number; y: number }
 interface WallEl { x1: number; y1: number; x2: number; y2: number }
@@ -110,7 +110,7 @@ export function SetPlanPreview({
           <g key={`li-${l.id}`}>
             <circle cx={toX(l.x)} cy={toY(l.y)} r="10" fill="rgba(251, 191, 36, 0.2)" stroke="#f59e0b" strokeWidth="1.5" />
             <text x={toX(l.x)} y={toY(l.y) + 3} fill="#f59e0b" fontSize="10" textAnchor="middle" fontWeight="bold">☀</text>
-            <text x={toX(l.x)} y={toY(l.y) + 22} fill="#f59e0b" fontSize="8" textAnchor="middle" fontFamily="sans-serif">{l.label}</text>
+            {l.label && <text x={toX(l.x)} y={toY(l.y) + 22} fill="#f59e0b" fontSize="8" textAnchor="middle" fontFamily="sans-serif">{l.label}</text>}
           </g>
         ))}
 
